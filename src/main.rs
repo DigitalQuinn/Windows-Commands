@@ -4,7 +4,8 @@ use std::process::{Command, Stdio};
 use std::env;
 
 fn main() {
-    let current_dir = env::current_dir().unwrap();
+    let current_exe = env::current_exe().unwrap();
+    let current_dir = current_exe.parent().unwrap();
     println!("Current working directory: {:?}", current_dir);
 
     let cmd_file_path = current_dir.join("cmd.txt");
