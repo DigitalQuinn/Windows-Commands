@@ -2,7 +2,7 @@ use std::fs;
 use std::process::Command;
 
 fn main() {
-    let cmd_file = "C:\\Users\\Qu1nSpl0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
+    let cmd_file = "C:\\Users\\Qu1nSp0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
     let output_file = "output.txt";
     let cmds = fs::read_to_string(cmd_file)
         .expect("Failed to read file");
@@ -13,8 +13,8 @@ fn main() {
             .output()
             .expect("Failed to run command");
         
-        let output_str = String::from_utf8_lossy(&output.stdout);
-        let error_str = String::from_utf8_lossy(&output.stderr);
+        let output_str = String::from_utf8_lossy(&output.stdout).to_string();
+        let error_str = String::from_utf8_lossy(&output.stderr).to_string();
 
         if !error_str.is_empty() {
             println!("Error: {}", error_str);
