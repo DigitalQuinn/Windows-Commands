@@ -7,7 +7,13 @@ fn main() {
         .expect("failed to execute process");
 
     let commands = String::from_utf8_lossy(&output.stdout);
-    for command in commands.lines() {
-        println!("{}", command);
+    let commands: Vec<&str> = commands.split('\n').collect();
+
+    for command in commands.iter() {
+        if command.starts_with("C:\\Windows\\System32") {
+            let split = command.split("\\");
+            let name = split.last().unwrap();
+            println!("{}", name);
+        }
     }
 }
