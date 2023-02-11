@@ -28,7 +28,17 @@ fn main() {
                     if stderr.contains("is not recognized as an internal or external command") {
                         println!("Command not recognized: {:?}", cmd);
                     } else {
-                        println!("{:?}", stderr);
+                        let parts: Vec<&str> = cmd.split(" ").collect();
+                        let mut example_cmd = String::new();
+                        example_cmd.push_str(parts[0]);
+                        example_cmd.push_str(" ");
+                        for i in 1..parts.len() {
+                            example_cmd.push_str("<");
+                            example_cmd.push_str(parts[i]);
+                            example_cmd.push_str(">");
+                            example_cmd.push_str(" ");
+                        }
+                        println!("Error: {:?}\nExample command: {:?}", stderr, example_cmd);
                     }
                 } else {
                     let stdout = String::from_utf8_lossy(&o.stdout);
