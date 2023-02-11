@@ -1,10 +1,6 @@
-$registryKeys = @("HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion", "HKCC", "HKCR", "HKU", "HKCU")
-
-foreach ($key in $registryKeys) {
-  $values = Get-ItemProperty $key -ErrorAction SilentlyContinue
-  foreach ($value in $values.PSObject.Properties) {
-    if ($value.Value -match '\s') {
-      Write-Output "$($key)\\$($value.Name) = $($value.Value)"
-    }
-  }
+$result = Test-Connection -ComputerName 1.1.1.1 -Count 1 -Quiet
+if ($result) {
+    Write-Host "Success: 1.1.1.1 is reachable."
+} else {
+    Write-Host "Error: 1.1.1.1 is not reachable."
 }
