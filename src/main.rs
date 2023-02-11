@@ -1,8 +1,8 @@
 use std::process::Command;
 
 fn main() {
-    let output = Command::new("tpmtool.exe")
-        .args(&["drive", "tracing", "stop"])
+    let output = Command::new("cmd")
+        .args(&["/C", "tpmtool.exe", "drivertracing", "stop"])
         .output()
         .expect("failed to execute process");
 
