@@ -7,7 +7,8 @@ fn main() {
     let current_dir = env::current_dir().unwrap();
     println!("Current working directory: {:?}", current_dir);
 
-    let cmd_file = File::open("cmd.txt").unwrap();
+    let cmd_file_path = current_dir.join("cmd.txt");
+    let cmd_file = File::open(cmd_file_path).unwrap();
     let cmd_reader = BufReader::new(cmd_file);
     for line in cmd_reader.lines() {
         let cmd = line.unwrap();
