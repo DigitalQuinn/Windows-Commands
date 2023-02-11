@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::process::{Command, Stdio};
 
 fn main() {
-    let cmd_file_path = "C:\\Users\\Qu1nSpl0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
+    let cmd_file_path = "C:\\Users\\Qu1nSp0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
     let cmd_file = match File::open(cmd_file_path) {
         Ok(file) => file,
         Err(e) => {
@@ -14,9 +14,10 @@ fn main() {
     let cmd_reader = BufReader::new(cmd_file);
     for line in cmd_reader.lines() {
         let cmd = line.unwrap();
+        let quoted_cmd = format!("\"{}\"", cmd);
         let output = Command::new("cmd")
             .arg("/C")
-            .arg(&cmd)
+            .arg(&quoted_cmd)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .output();
