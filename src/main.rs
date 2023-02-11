@@ -20,7 +20,7 @@ fn main() {
         }
     }
 
-    let file = match File::create("available-cmds") {
+    let mut file = match File::create("available-cmds") {
         Err(why) => panic!("couldn't create available-cmds: {}", why),
         Ok(file) => file,
     };
