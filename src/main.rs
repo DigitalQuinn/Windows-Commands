@@ -2,7 +2,7 @@ use std::fs;
 use std::process::Command;
 
 fn main() {
-    let cmd_file = "C:\\Users\\Qu1nSp0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
+    let cmd_file = "C:\\Users\\Qu1nSpl0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
     let output_file = "output.txt";
     let cmds = fs::read_to_string(cmd_file)
         .expect("Failed to read file");
