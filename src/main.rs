@@ -11,10 +11,12 @@ fn main() {
     let cmd_reader = BufReader::new(cmd_file);
     for line in cmd_reader.lines() {
         let cmd = line.unwrap();
+        let cmd_copy = cmd.clone();
+        let current_dir_clone = current_dir.clone();
         let output = Command::new("sh")
             .arg("-c")
-            .arg(cmd)
-            .current_dir(&current_dir)
+            .arg(&cmd_copy)
+            .current_dir(&current_dir_clone)
             .stdout(Stdio::null())
             .stderr(Stdio::piped())
             .output();
