@@ -13,7 +13,7 @@ fn main() {
             let key = line.split("    ").nth(0).unwrap();
             let value = line.split("    ").nth(3).unwrap();
             if value.contains(" ") {
-                println!("{}", key);
+                println!("{}: {}", key, value);
             }
         }
     }
