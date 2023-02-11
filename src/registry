@@ -1,0 +1,10 @@
+$registryKeys = @("HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion", "HKCC", "HKCR", "HKU", "HKCU")
+
+foreach ($key in $registryKeys) {
+  $values = Get-ItemProperty $key -ErrorAction SilentlyContinue
+  foreach ($value in $values.PSObject.Properties) {
+    if ($value.Value -match '\s') {
+      Write-Output "$($key)\\$($value.Name) = $($value.Value)"
+    }
+  }
+}
