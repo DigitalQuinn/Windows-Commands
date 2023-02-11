@@ -1,54 +1,26 @@
+use std::fs;
 use std::process::Command;
-use std::io::{self, Read};
-
-fn generate_example_command(command: &str) -> String {
-    // Parse the command string to determine the command name and its parameters
-    let parts: Vec<&str> = command.split_whitespace().collect();
-    let command_name = parts[0];
-    let parameters = parts[1..].join(" ");
-
-    // Generate an example command string based on the command name and parameters
-    let example_command = match command_name {
-        "dir" => format!("dir {}", parameters),
-        "echo" => format!("echo {}", parameters),
-        // Add cases for other commands as needed
-        _ => format!("{} {}", command_name, parameters),
-    };
-
-    example_command
-}
 
 fn main() {
-    // Read the commands from the file
-    let mut file = match std::fs::File::open("C:\\Users\\Qu1nSp0it\\Desktop\\rust\\Windows-Commands\\cmd.txt") {
-        Ok(file) => file,
-        Err(error) => {
-            println!("Error opening file: {}", error);
-            return;
-        },
-    };
+    let cmd_file = "C:\\Users\\Qu1nSpl0it\\Desktop\\rust\\Windows-Commands\\cmd.txt";
+    let output_file = "output.txt";
+    let cmds = fs::read_to_string(cmd_file)
+        .expect("Failed to read file");
 
-    let mut contents = String::new();
-    match file.read_to_string(&mut contents) {
-        Ok(_) => {},
-        Err(error) => {
-            println!("Error reading file: {}", error);
-            return;
-        },
-    };
-
-    // Iterate over each line in the file and run the command
-    for line in contents.lines() {
-        let example_command = generate_example_command(line);
+    for cmd in cmds.lines() {
         let output = Command::new("cmd")
-            .args(&["/C", &example_command])
+            .args(&["/C", cmd])
             .output()
             .expect("Failed to run command");
+        
+        let output_str = String::from_utf8_lossy(&output.stdout);
+        let error_str = String::from_utf8_lossy(&output.stderr);
 
-        if !output.status.success() {
-            println!("Error running command: {}", String::from_utf8_lossy(&output.stderr));
+        if !error_str.is_empty() {
+            println!("Error: {}", error_str);
         } else {
-            println!("{}", String::from_utf8_lossy(&output.stdout));
+            fs::write(output_file, output_str)
+                .expect("Failed to write file");
         }
     }
 }
